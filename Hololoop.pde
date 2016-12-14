@@ -1,3 +1,13 @@
+/* HOLOLOOP *
+
+Modes:
+1 - Rays
+2 - Rectangle paths
+3 - 
+
+. - Reset
+
+*/
 import processing.sound.*;
 import signal.library.*;
 
