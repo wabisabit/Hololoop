@@ -3,10 +3,14 @@ class Node {
   PVector position;
   ArrayList<PVector> rays = new ArrayList<PVector>();
   int numRays;
+  int rotationDirection;
+  float rotationSpeed;
   
   Node( PVector _position, int _numRays ) {
     position = _position;
     numRays = _numRays;
+    rotationDirection = ( random( 2 ) > 1 ) ? 1 : -1;
+    rotationSpeed = random( 0.5 );
   }
 
   void addRay( PVector endPoint ) {
@@ -20,8 +24,9 @@ class Node {
   void display() {
     
     for ( PVector rayV : rays ) {
-      strokeWeight( 2 + spectrum[0] *100 );
-      stroke( 255, 255 - spectrum[1] * 200, 255, 100 );
+      
+      strokeWeight( 2 );
+      stroke( 255, 255, 255, 100 );
   
       pushMatrix();
       translate( position.x, position.y );
@@ -32,11 +37,21 @@ class Node {
   }
   
   void update() {
-    for ( PVector rayV : rays ) {
-      //rayV.heading();
-      
+    
+    if ( bandHigh > 0.1 && random( 100 ) > 60 ) {
+        rotationDirection *= -1;  
     }
     
+    for ( PVector rayV : rays ) {
+      
+      rayV.rotate( rotationSpeed * rotationDirection / rayV.mag() );
+      
+      /* TODO: store original 
+      if ( random( 1 ) > 0.99 ) {
+        rayV.setMag( bandHigh * 200 );
+      }
+      */
+    }
   }
 
 }

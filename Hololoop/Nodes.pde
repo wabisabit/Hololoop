@@ -34,9 +34,11 @@ class Nodes {
   void display() {
 
     for ( Node node : nodes ) {
+      node.update();
       node.display();
     }
   }
+ 
 
   void draw() {
     if (drawing) {

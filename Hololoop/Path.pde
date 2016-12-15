@@ -1,9 +1,12 @@
 class Path {
   
   ArrayList<Particle> particles;
+  boolean acceptAudio;
   
   Path() {
     particles = new ArrayList<Particle>();
+    //acceptAudio = random( 100 ) > 20 ? true : false;
+    acceptAudio = true;
   }
 
   void addParticle( float x, float y, float parHeight, float heading ) {
@@ -14,7 +17,7 @@ class Path {
   void draw(  ) {
 
 
-    if ( drawing ) {
+    if ( drawing && !eraserMode ) {
 
       Particle lastParticle = this.particles.get( this.particles.size() - 1 );
 
@@ -50,9 +53,15 @@ class Path {
     stroke( 255 );
     strokeWeight( 2 );
     rectMode( CENTER );
-
+    
     for (Particle particle: particles) {
-      particle.display();
+      particle.display( acceptAudio );
+    }
+  }
+  
+  void kill() {
+    for (Particle particle: particles) {
+      particle.fall();
     }
   }
 }
