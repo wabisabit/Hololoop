@@ -4,7 +4,7 @@ Modes:
 1         - Rays
 2         - Rectangle paths
 3         - Circles (WIP)
-BACKSPACE - Eraser mode (WIP)
+BACKSPACE - Eraser mode (WIP only paths)
 .         - Reset
 
 
@@ -23,7 +23,7 @@ float bandLow, bandMidLow, bandMidHigh, bandHigh, amplitude;
 int mode = 1;
 boolean eraserMode = false;
 
-ArrayList<Path> paths = new ArrayList();
+Paths paths;
 
 Nodes nodes;
 int gridSize = 100;
@@ -34,7 +34,7 @@ void setup() {
   
   hint(DISABLE_OPTIMIZED_STROKE); // To be able to draw rect with fill
   
-  //*
+  /*
   size( 1536, 698, P3D );
   /*/
   fullScreen( P3D, 1 );
@@ -54,6 +54,8 @@ void setup() {
   fft.input( soundfile );
   //*/
   
+  paths = new Paths();
+  
   nodes = new Nodes( gridSize, gridSize, 2 /*minNumRays*/, 100 /*maxNumRays*/);
   
 }
@@ -68,7 +70,7 @@ void draw() {
   bandMidLow = spectrum[1];
   bandMidHigh = spectrum[2];
   bandHigh = spectrum[3];
-  //println(bandHigh);
+
   amplitude = ( bandLow + bandMidLow + bandMidHigh + bandHigh ) / 4;
   
   background( 0 );
@@ -78,18 +80,16 @@ void draw() {
   if ( mode == 1 ) {
     nodes.draw();
   }
-  
-  // Draw all paths
-  for (Path path: paths) {
-    path.display();
-  }
+
+  paths.update();
+  paths.display();
 
 
   if ( mode == 2 ) {
 
-    if ( paths.size() > 0 ) {
+    if ( !paths.isEmpty() ) {
       
-      paths.get( paths.size() - 1 ).draw();
+      paths.getLast().draw();
       
     }
   }
@@ -107,11 +107,9 @@ void keyPressed() {
   }
   
   if ( key == '.' ) {
-    setup();
-    for ( Path path : paths ) {
-      path.kill();
-    }
-    // TODO call the stuff kill method
+    //nodes.kill();
+    paths.kill();
+    //pulses.kill();
   }
   
   if( keyCode == 8 ) {
@@ -132,14 +130,13 @@ void mousePressed() {
       println(eraserMode);
       if ( eraserMode ) {
         
-        for ( Path path : paths ) {
-          path.kill();
-        }
+        paths.getClosest( new PVector( mouseX, mouseY ) ).kill();
         
       } else {
         println( "rect" );
-        paths.add( new Path() );
-        paths.get( paths.size() - 1 ).addParticle( mouseX, mouseY, random( 2, 5 ), 0 );
+        Path path = paths.add();
+        path.addParticle( mouseX, mouseY, random( 1, 5 ), 0 );
+        //paths.get( paths.size() - 1 )
       
       }
       

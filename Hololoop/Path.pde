@@ -24,7 +24,7 @@ class Path {
       if ( exitedParticle( lastParticle ) ) {
 
         PVector mouseV = new PVector( mouseX, mouseY );
-        PVector lastParticleV = new PVector( lastParticle.x, lastParticle.y );
+        PVector lastParticleV = new PVector( lastParticle.position.x, lastParticle.position.y );
         float parHeight = noise( this.particles.size() * 0.5 ) * 20;
 
         PVector newParticleV = PVector.sub( mouseV, lastParticleV );
@@ -40,10 +40,10 @@ class Path {
   
   boolean exitedParticle( Particle lastParticle ) {
 
-    return mouseX < lastParticle.x - lastParticle.parWidth * 0.5  || 
-           mouseX > lastParticle.x + lastParticle.parWidth * 0.5  ||
-           mouseY < lastParticle.y - lastParticle.parHeight * 0.5 ||
-           mouseY > lastParticle.y + lastParticle.parHeight * 0.5;
+    return mouseX < lastParticle.position.x - lastParticle.pWidth * 0.5  || 
+           mouseX > lastParticle.position.x + lastParticle.pWidth * 0.5  ||
+           mouseY < lastParticle.position.y - lastParticle.pHeight * 0.5 ||
+           mouseY > lastParticle.position.y + lastParticle.pHeight * 0.5;
   };
 
   void display() {

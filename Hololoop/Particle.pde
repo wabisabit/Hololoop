@@ -1,16 +1,14 @@
 class Particle {
   
-  float x, y, z; 
-  int parHeight, parWidth;
+  PVector position; 
+  int pHeight, pWidth;
   float heading;
   boolean falling;
   
-  Particle( float _x, float _y, int _parWidth, int _parHeight, float _heading ) {
-    x = _x;
-    y = _y;
-    z = 0;
-    parHeight = _parHeight;
-    parWidth = _parWidth;
+  Particle( float x, float y, int _pWidth, int _pHeight, float _heading ) {
+    position = new PVector( x, y, 0 );
+    pHeight = _pHeight;
+    pWidth = _pWidth;
     heading = _heading;
     falling = false;
   }
@@ -21,12 +19,12 @@ class Particle {
     
     pushMatrix();
     if ( falling ) {
-      z -= 50;
+      position.z -= 50;
     }
-    translate( x, y, z );
+    translate( position.x, position.y, position.z );
     rotate( heading );
     
-    rect( 0, 0, parWidth + grow, parHeight + grow);
+    rect( 0, 0, pWidth + grow, pHeight + grow);
     popMatrix();
   }
   
@@ -35,7 +33,7 @@ class Particle {
   }
   
   boolean isDead() {
-     return z < 7000;
+     return position.z < -5000;
   }
 
 }
