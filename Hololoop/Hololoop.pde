@@ -78,7 +78,9 @@ void draw() {
   nodes.display();
 
   if ( mode == 1 ) {
-    nodes.draw();
+    
+    nodes.draw( eraserMode );
+    
   }
 
   paths.update();
@@ -107,7 +109,7 @@ void keyPressed() {
   }
   
   if ( key == '.' ) {
-    //nodes.kill();
+    nodes.kill();
     paths.kill();
     //pulses.kill();
   }
@@ -124,7 +126,12 @@ void mousePressed() {
   drawing = true;
 
   switch( mode ) {
-
+    
+    case 1:
+      
+      
+      break;
+      
     // Paths
     case 2:
       println(eraserMode);

@@ -5,19 +5,21 @@ class Node {
   int numRays;
   int rotationDirection;
   float rotationSpeed;
+  boolean dying;
   
   Node( PVector _position, int _numRays ) {
     position = _position;
     numRays = _numRays;
     rotationDirection = ( random( 2 ) > 1 ) ? 1 : -1;
     rotationSpeed = random( 0.5 );
+    dying = false;
   }
 
   void addRay( PVector endPoint ) {
  
     rays.add( PVector.sub( endPoint, position ) );
     if ( rays.size() > numRays ) {
-      rays.remove(rays.get(0));
+      rays.remove( rays.get( 0 ) );
     }
   }
 
@@ -44,6 +46,9 @@ class Node {
     
     for ( PVector rayV : rays ) {
       
+      if ( dying ) {
+        rayV.mult( 0.8 );
+      }
       rayV.rotate( rotationSpeed * rotationDirection / rayV.mag() );
       
       /* TODO: store original 
@@ -52,6 +57,18 @@ class Node {
       }
       */
     }
+  }
+  
+  void removeRay() {
+    
+    if ( rays.size() > 0 ) {
+      rays.remove( rays.size() - 1 );
+    }
+    
+  }
+  
+  void kill( boolean kill ) {
+    dying = kill;
   }
 
 }
