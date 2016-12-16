@@ -3,8 +3,8 @@
 Modes:
 1         - Rays
 2         - Rectangle paths
-3         - Circles (WIP)
-BACKSPACE - Eraser mode (WIP only paths)
+3         - Pulses
+BACKSPACE - Eraser mode (1 & 2)
 .         - Reset
 
 
@@ -35,6 +35,7 @@ boolean eraserMode = false;
 Paths paths;
 
 Nodes nodes;
+Pulses pulses;
 int gridSize = 100;
 
 boolean drawing = false;
@@ -44,7 +45,7 @@ void setup() {
   hint(DISABLE_OPTIMIZED_STROKE); // To be able to draw rect with fill
   
   /*
-  size( 1536, 698, P3D );
+  size( 800, 600, P3D );
   /*/
   fullScreen( P3D, 1 );
   //*/
@@ -69,6 +70,8 @@ void setup() {
   paths = new Paths();
   
   nodes = new Nodes( gridSize, gridSize, 2 /*minNumRays*/, 100 /*maxNumRays*/);
+  
+  pulses = new Pulses( gridSize, gridSize );
   
 }
 
@@ -103,6 +106,14 @@ void draw() {
     nodes.draw( eraserMode );
     
   }
+  
+  pulses.display();
+  
+  if ( mode == 3 ) {
+    
+    pulses.draw();
+    
+  }
 
   paths.update();
   paths.display();
@@ -132,7 +143,6 @@ void keyPressed() {
   if ( key == '.' ) {
     nodes.kill();
     paths.kill();
-    //pulses.kill();
   }
   
   if( keyCode == 8 ) {
