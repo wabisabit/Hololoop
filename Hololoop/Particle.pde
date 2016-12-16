@@ -15,7 +15,7 @@ class Particle {
 
   void display( boolean acceptAudio ) {
     
-    float grow = acceptAudio ? ( 200 * bandLow ) : 0;
+    float grow = acceptAudio ? ( 200 * amp ) : 0;
     
     pushMatrix();
     if ( falling ) {
@@ -24,7 +24,7 @@ class Particle {
     translate( position.x, position.y, position.z );
     rotate( heading );
     
-    rect( 0, 0, pWidth + grow, pHeight + grow);
+    rect( 0, 0, pWidth + grow * 1.618, pHeight + grow);
     popMatrix();
   }
   

@@ -24,6 +24,7 @@ class Node {
   }
 
   void display() {
+    //print(dying ? "d" : "");
     
     for ( PVector rayV : rays ) {
       
@@ -40,15 +41,16 @@ class Node {
   
   void update() {
     
-    if ( bandHigh > 0.1 && random( 100 ) > 60 ) {
+    if ( amp > 0.1 && random( 100 ) > 60 ) {
         rotationDirection *= -1;  
     }
     
     for ( PVector rayV : rays ) {
       
+      /*
       if ( dying ) {
         rayV.mult( 0.8 );
-      }
+      }*/
       rayV.rotate( rotationSpeed * rotationDirection / rayV.mag() );
       
       /* TODO: store original 
@@ -65,6 +67,12 @@ class Node {
       rays.remove( rays.size() - 1 );
     }
     
+  }
+  
+  void removeRays() {
+    for ( int i = rays.size() - 1; i >= 0; i-- ) {
+      rays.remove( i );
+    }
   }
   
   void kill( boolean kill ) {

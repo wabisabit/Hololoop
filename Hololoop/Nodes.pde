@@ -4,7 +4,9 @@ class Nodes {
   int columns, rows;
   ArrayList<Node> nodes = new ArrayList<Node>();
   boolean dying;
-  int deathTime;
+  int numNodes = 0;
+  int _numNodes;
+
   
   Nodes( float nodeWidth, float nodeHeight, int minNumRays, int maxNumRays ) {
 
@@ -15,11 +17,11 @@ class Nodes {
       for ( int y = 0; y < this.rows; y++ ) {
         
         nodes.add( new Node( new PVector( x * nodeWidth, y * nodeHeight ), int( random( minNumRays, maxNumRays ) ) ) );
+        numNodes++;
       }
     }
     
     dying = false;  
-    deathTime = 0;
   }
 
   Node getNearest( PVector position ) {
@@ -38,17 +40,24 @@ class Nodes {
   void display() {
 
     for ( Node node : nodes ) {
+      
+      if ( dying ) {
+        
+        node.removeRays();        
+          
+        node.kill( false );
+        
+        _numNodes--;
+        
+        if ( _numNodes == 0 ) {
+          dying = false;
+        }
+      }
+      
       node.update();
       node.display();
-      if ( dying && frameCount > deathTime ) {
-        // TODO remove all rays not just last
-        node.removeRay();
-        node.kill( false );
-        dying = false;
-      }
-    }
-    
-    
+      
+    } 
   }
  
 
@@ -67,10 +76,12 @@ class Nodes {
   }
   
   void kill() {
+    
+    _numNodes = numNodes;
     dying = true;
+    
     for ( Node node : nodes ) {
       node.kill( true );
     }
-    deathTime = frameCount + 200;
   }
 }
