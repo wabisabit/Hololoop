@@ -51,7 +51,9 @@ class Node {
       if ( dying ) {
         rayV.mult( 0.8 );
       }*/
-      rayV.rotate( rotationSpeed * rotationDirection / rayV.mag() );
+      if ( rotationSwitch ) {
+        rayV.rotate( rotationSpeed * rotationDirection / rayV.mag() );
+      }
       
       /* TODO: store original 
       if ( random( 1 ) > 0.99 ) {

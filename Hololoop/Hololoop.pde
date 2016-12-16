@@ -5,8 +5,10 @@ Modes:
 2         - Rectangle paths
 3         - Pulses
 BACKSPACE - Eraser mode (1 & 2)
-.         - Reset
 
+r         - Rotation on/off for rays
+
+.         - Reset
 
 */
 
@@ -31,6 +33,7 @@ float amp;
 
 int mode = 1;
 boolean eraserMode = false;
+boolean rotationSwitch = false;
 
 Paths paths;
 
@@ -140,10 +143,17 @@ void keyPressed() {
     println( "mode: " + key );
   }
   
-  if ( key == '.' ) {
-    nodes.kill();
-    paths.kill();
+  switch ( key ) {
+    case '.':
+      nodes.kill();
+      paths.kill();
+      break;
+    case 'r':
+      rotationSwitch = !rotationSwitch;
+      break;
+    
   }
+  
   
   if( keyCode == 8 ) {
     eraserMode = !eraserMode;

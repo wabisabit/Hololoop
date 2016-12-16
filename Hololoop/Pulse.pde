@@ -45,7 +45,7 @@ class Pulse {
         pulseOpacities[ i ] -= 5 - random( 1 );
         opacitiesSum += pulseOpacities[ i ];
       }
-      println(opacitiesSum);
+      
       if ( opacitiesSum <= 0) {
         finished = true;
       }
