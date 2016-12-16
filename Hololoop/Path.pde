@@ -1,12 +1,12 @@
 class Path {
   
   ArrayList<Particle> particles;
-  boolean acceptAudio;
+  float audioScale;
   
   Path() {
     particles = new ArrayList<Particle>();
     //acceptAudio = random( 100 ) > 20 ? true : false;
-    acceptAudio = true;
+    audioScale = abs( randomGaussian( ) ) * 50;
   }
 
   void addParticle( float x, float y, float parHeight, float heading ) {
@@ -55,7 +55,7 @@ class Path {
     rectMode( CENTER );
     
     for (Particle particle: particles) {
-      particle.display( acceptAudio );
+      particle.display( audioScale );
     }
   }
   

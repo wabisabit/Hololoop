@@ -13,8 +13,7 @@ class Paths {
   Path add() {
     Path path = new Path();
     paths.add( path );
-    
-    println(paths.size());
+
     return path;
   }
   
@@ -25,9 +24,9 @@ class Paths {
   void update() {
     for ( int i = paths.size() - 1; i >= 0; i-- ) {
       
-      Path path = paths.get(i);
+      Path path = paths.get( i );
       
-      if ( path.particles.get(0).isDead() ) {
+      if ( path.particles.get( 0 ).isDead() ) {
         paths.remove( path );
       }
     }

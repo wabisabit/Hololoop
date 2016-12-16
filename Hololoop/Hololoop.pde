@@ -43,7 +43,7 @@ void setup() {
   
   hint(DISABLE_OPTIMIZED_STROKE); // To be able to draw rect with fill
   
-  //*
+  /*
   size( 1536, 698, P3D );
   /*/
   fullScreen( P3D, 1 );
@@ -155,13 +155,13 @@ void mousePressed() {
       
     // Paths
     case 2:
-      println(eraserMode);
+      
       if ( eraserMode ) {
         
         paths.getClosest( new PVector( mouseX, mouseY ) ).kill();
         
       } else {
-        println( "rect" );
+        
         Path path = paths.add();
         path.addParticle( mouseX, mouseY, random( 1, 5 ), 0 );
         //paths.get( paths.size() - 1 )
