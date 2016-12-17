@@ -7,6 +7,8 @@ Modes:
 BACKSPACE - Eraser mode (1 & 2)
 
 r         - Rotation on/off for rays
+c         - Color on/off for paths
+p         - Psychedelic!!!
 
 .         - Reset
 
@@ -28,12 +30,14 @@ Amplitude rms;
 float scale = 1;
 float smooth_factor = 0.5; // 0-1 Lower -> more smoothing
 float sum;
-float amp;
+float amp, ampSum;
 /****************/
 
 int mode = 1;
 boolean eraserMode = false;
 boolean rotationSwitch = false;
+boolean colorSwitch = false;
+boolean psychoSwitch = false;
 
 Paths paths;
 
@@ -42,6 +46,24 @@ Pulses pulses;
 int gridSize = 100;
 
 boolean drawing = false;
+
+color[] palette1 = { #BBBB88, #CCC68D, #EEDD99, #EEC290, #EEAA88 };
+color[] palette2 = { #FF4242, #F4FAD2, #D4EE5E, #E1EDB9, #F0F2EB };
+color[] palette3 = { #D1F2A5, #EFFAB4, #FFC48C, #FF9F80, #F56991 };
+color[] palette4 = { #CFFFDD, #B4DEC1, #5C5863, #A85163, #FF1F4C };
+color[] palette5 = { #B3CC57, #ECF081, #FFBE40, #EF746F, #AB3E5B };
+color[] palette6 = { #CC0C39, #E6781E, #C8CF02, #F8FCC1, #1693A7 };
+color[] palette7 = { #1693A5, #02AAB0, #00CDAC, #7FFF24, #C3FF68 };
+
+color palettes[][] = { { #BBBB88, #CCC68D, #EEDD99, #EEC290, #EEAA88 },
+                       { #FF4242, #F4FAD2, #D4EE5E, #E1EDB9, #F0F2EB },
+                       { #D1F2A5, #EFFAB4, #FFC48C, #FF9F80, #F56991 },
+                       { #CFFFDD, #B4DEC1, #5C5863, #A85163, #FF1F4C },
+                       { #B3CC57, #ECF081, #FFBE40, #EF746F, #AB3E5B },
+                       { #CC0C39, #E6781E, #C8CF02, #F8FCC1, #1693A7 },
+                       { #1693A5, #02AAB0, #00CDAC, #7FFF24, #C3FF68 } };
+
+color[] currentPalette = palettes[ int( random( palettes.length ) ) ];
 
 void setup() {
   
@@ -97,6 +119,7 @@ void draw() {
 
   // rms.analyze() returns a value between 0 and 1.
   amp= sum * scale;
+  ampSum += amp;
   
   /*****************/
   
@@ -131,8 +154,13 @@ void draw() {
     }
   }
   
-  strokeWeight( 1 );
-  stroke( 255 );
+  strokeWeight( random( 2 ) );
+  
+  if ( eraserMode ) {
+    stroke( 255, 0, 0 );
+  } else {
+    stroke( 255 );
+  }
   point( mouseX + random ( -5, 5 ), mouseY + random ( -5, 5 ) );
 }
 
@@ -151,14 +179,20 @@ void keyPressed() {
     case 'r':
       rotationSwitch = !rotationSwitch;
       break;
-    
+    case 'c':
+      currentPalette = palettes[ int( random( palettes.length ) ) ];
+      colorSwitch = !colorSwitch;
+      break;
+    case 'p':
+      psychoSwitch = !psychoSwitch;
+      break;
   }
   
   
   if( keyCode == 8 ) {
     eraserMode = !eraserMode;
   }
-  println( eraserMode ? "erasing" : "drawing" );
+  //println( eraserMode ? "erasing" : "drawing" );
 }
 
 

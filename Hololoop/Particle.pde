@@ -15,6 +15,15 @@ class Particle {
 
   void display( float audioScale ) {
     
+    if ( colorSwitch ) {
+      fill( currentPalette[ int( noise( ampSum + position.x + position.y ) * palette1.length ) ] );
+    }
+    
+    if ( psychoSwitch ) {
+      fill( random( 255 ), random( 255 ), random( 255 ), random( 255 ) );
+      position.z += randomGaussian() * 5;
+    }
+    
     pushMatrix();
     if ( falling ) {
       position.z -= 50;

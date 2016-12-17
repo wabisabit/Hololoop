@@ -55,11 +55,12 @@ class Node {
         rayV.rotate( rotationSpeed * rotationDirection / rayV.mag() );
       }
       
-      /* TODO: store original 
-      if ( random( 1 ) > 0.99 ) {
-        rayV.setMag( bandHigh * 200 );
+      if ( psychoSwitch ) {
+        if ( random( 1 ) > 0.9 ) {
+          rayV.mult( 1 + amp );
+        }
       }
-      */
+      
     }
   }
   

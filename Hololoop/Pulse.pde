@@ -57,11 +57,12 @@ class Pulse {
     if ( !finished ) {
       for ( int i = 0; i < numPulses; i++ ) {
         
-        strokeWeight( 5 / ( pulseWidths[ i ] ) );
+        
+        strokeWeight( 5 / ( psychoSwitch ? 1 : pulseWidths[ i ] ) );
         stroke( 255, 255, 255, pulseOpacities[ i ] );
         noFill();
         pushMatrix();
-        translate( position.x, position.y );
+        translate( position.x, position.y, psychoSwitch ? random( -100, 100 ) : 0 );
         ellipse( 0, 0, pulseWidths[ i ], pulseWidths[ i ] );
         popMatrix();
       }
