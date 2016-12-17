@@ -27,6 +27,10 @@ class Particle {
     pushMatrix();
     if ( falling ) {
       position.z -= 50;
+      stroke( 255 + position.z / 10 );
+      if ( colorSwitch ) {
+        fill( 200 + position.z / 10 );
+      }
     }
     translate( position.x, position.y, position.z );
     rotate( heading );
